@@ -41,4 +41,4 @@ fi
 
 curl -O https://raw.githubusercontent.com/EduardoKrausME/moodle_friendly_installation/refs/heads/master/install-info.php install-info.php
 php install-info.php
-
+rm -f install-info.php
