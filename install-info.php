@@ -94,8 +94,8 @@ echo "Now I will download the Moodle code. Stay tuned, I'll be back with more op
 
 shell_exec("git clone --depth 1 https://github.com/moodle/moodle/ -b {$selectedVersion} /var/www/html/{$host}{$path}");
 shell_exec("mkdir -p /var/www/moodledata/{$host}{$path}");
+shell_exec("mkdir -R www-data:www-data /var/www/moodledata/{$host}{$path}");
 shell_exec("chmod 755 /var/www/moodledata/{$host}{$path}");
-
 
 echo "The codes are in the folder /var/www/html/{$host}{$path} and now let's move to the database:\n\n";
 
