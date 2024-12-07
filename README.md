@@ -2,6 +2,8 @@
 
 This script aims to simplify the installation of Moodle on Ubuntu servers, setting up the environment in an optimized and user-friendly way.
 
+[![View on YouTube](https://img.youtube.com/vi/oM9wA4IbgLM/maxresdefault.jpg)](https://youtu.be/oM9wA4IbgLM)
+
 ## Requirements
 
 - Operating system: Ubuntu 18 or higher.
