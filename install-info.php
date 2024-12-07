@@ -72,8 +72,11 @@ echoColor("Now I will download the Moodle code. Stay tuned, I'll be back with mo
 
 shell_exec("git clone --depth 1 https://github.com/moodle/moodle/ -b {$selectedVersion} {$local}");
 shell_exec("mkdir -p /var/www/moodledata/{$host}{$path}");
-shell_exec("mkdir -R www-data:www-data /var/www/moodledata/{$host}{$path}");
-shell_exec("chmod 755 /var/www/moodledata/{$host}{$path}");
+shell_exec("chown -R www-data:www-data /var/www/moodledata/{$host}{$path}");
+shell_exec("chmod -R 755               /var/www/moodledata/{$host}{$path}");
+
+shell_exec("chown -R www-data:www-data {$local}");
+shell_exec("chmod -R 755               {$local}");
 
 echoColor("The codes are in the folder {$local} and now let's move to the database:", "blue");
 
