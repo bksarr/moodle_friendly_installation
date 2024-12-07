@@ -9,14 +9,14 @@ apt update -y
 
 # Check if the script is being run as root
 if [ "$EUID" -ne 0 ]; then
-  echo "\033[31m This script must be run as root. Please re-run using sudo or as the root user.  \033[0m"
+  echo "This script must be run as root. Please re-run using sudo or as the root user."
   exit 1
 fi
 
 
 # Check if MySql is installed
 if ! command -v mysql &> /dev/null; then
-    echo "\033[31m MySql is not installed. Installing now...  \033[0m"
+    echo "MySql is not installed. Installing now..."
 
     apt install -y mysql-server
 
@@ -25,15 +25,15 @@ if ! command -v mysql &> /dev/null; then
 
     # Confirm the installation
     if command -v mysql &> /dev/null; then
-        echo "\033[31m MySql was successfully installed!  \033[0m"
+        echo "MySql was successfully installed!"
     else
-        echo "\033[31m There was an error installing MySql.  \033[0m"
+        echo "There was an error installing MySql."
     fi
 fi
 
 # Check if PHP is installed
 if ! command -v php &> /dev/null; then
-    echo "\033[31m PHP is not installed. Installing now...  \033[0m"
+    echo "PHP is not installed. Installing now..."
 
     # Install PHP
     apt install -y php php-{cli,curl,gd,xml,mbstring,mysqli,intl,soap,xmlrpc,zip,bcmath} apache2 libapache2-mod-php
@@ -46,9 +46,9 @@ if ! command -v php &> /dev/null; then
 
     # Confirm the installation
     if command -v php &> /dev/null; then
-        echo "\033[31m PHP was successfully installed!  \033[0m"
+        echo "PHP was successfully installed!"
     else
-        echo "\033[31m There was an error installing PHP.  \033[0m"
+        echo "There was an error installing PHP."
     fi
 fi
 
@@ -69,8 +69,8 @@ if ! command -v certbot &> /dev/null; then
 fi
 
 
-#curl https://raw.githubusercontent.com/EduardoKrausME/moodle_friendly_installation/refs/heads/master/install-info.php -o install-info.php
+curl https://raw.githubusercontent.com/EduardoKrausME/moodle_friendly_installation/refs/heads/master/install-info.php -o install-info.php
 php install-info.php
-#rm -f install-info.php
+rm -f install-info.php
 
 
