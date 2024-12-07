@@ -95,7 +95,7 @@ file_put_contents("{$local}/config.php", getConfigPhp());
 
 
 echoColor("Now I will install Moodle", "green");
-shell_exec("php {$local}/admin/cli/install_database.php --adminuser=admin --adminpass=Password@123# --adminemail={$selectedEmail} --fullname=Moodle --shortname=Moodle --agree-license");
+system("php {$local}/admin/cli/install_database.php --adminuser=admin --adminpass=Password@123# --adminemail={$selectedEmail} --fullname=Moodle --shortname=Moodle --agree-license");
 
 
 echoColor("Installation completed. Now access it through the browser:
@@ -387,10 +387,7 @@ function echoColor($text, $color) {
  */
 function dialogGetData($title, $subtitle = "", $default = "") {
     $command = "dialog --title '{$title}' --inputbox '{$subtitle}' 11 50 '{$default}' 3>&1 1>&2 2>&3";
-
-    echo "\n\n {$command}\n\n";
     $data = shell_exec($command);
-
     return $data;
 }
 
