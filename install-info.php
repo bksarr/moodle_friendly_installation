@@ -470,7 +470,7 @@ function changueTheme() {
                        3>&1 1>&2 2>&3";
     if (shell_exec($command) == "YES") {
         shell_exec("git clone --depth 1 https://github.com/EduardoKrausME/moodle-theme_boost_magnific {$local}/theme/boost_magnific");
-        system("php {$local}/admin/cli/upgrade.php");
+        system("php {$local}/admin/cli/upgrade.php --non-interactive");
         system("php {$local}/admin/cli/cfg.php --name=theme --set=boost_magnific");
     }
 }
