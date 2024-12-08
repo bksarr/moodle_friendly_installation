@@ -174,7 +174,7 @@ function apacheConfiguration() {
         echoColor("Press enter to continue!", "black");
         fgets(STDIN);
 
-        $command = "dialog --menu 'How do you want the installation?' 15 50 2 \
+        $command = "dialog --menu 'How do you want the installation?' 15 70 2 \
                            root   '/var/www/html{$path}' \
                            domain '/var/www/html/{$host}{$path}' \
                            3>&1 1>&2 2>&3";
@@ -230,6 +230,7 @@ function apacheConfiguration() {
         }
     }
     if ($enableSsl) {
+        echo "\n\n\n\n\n\n\n";
         shell_exec("certbot --apache -m {$selectedEmail} -d {$host} --agree-tos --no-eff-email");
         shell_exec("(crontab -l; echo \"0 0 1 */2 * /usr/bin/certbot renew\") | crontab -");
     }
