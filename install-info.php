@@ -101,6 +101,10 @@ echoColor("Now I will install Moodle", "green");
 system("php {$local}/admin/cli/install_database.php --adminuser=admin --adminpass=Password@123# --adminemail={$selectedEmail} --fullname=Moodle --shortname=Moodle --agree-license");
 
 
+changueTheme();
+
+
+// End install
 echoColor("Installation completed. Now access it through the browser:
     Host:  {$selectedDomain}
     Login: admin
@@ -112,24 +116,40 @@ echoColor("Installation completed. Now access it through the browser:
  *
  */
 function test__max_input_vars() {
-    // Verifica o valor atual de max_input_vars
+    // Locate the php.ini file
+    $phpIniFile = php_ini_loaded_file();
+
+    // Check the current value of max_input_vars
     $currentValue = ini_get('max_input_vars');
 
     if ($currentValue !== false && $currentValue < 5000) {
         echoColor("O valor atual de max_input_vars é {$currentValue}. Tentando atualizar...", "red");
 
-        // Localiza o arquivo php.ini
-        $phpIniFile = php_ini_loaded_file();
         if ($phpIniFile === false) {
             echoColor("Arquivo php.ini não encontrado. Altere e tente novamente.", "red");
             exit;
         }
 
-        // Grava as alterações no arquivo
+        // Append the changes to the file
         file_put_contents($phpIniFile, "\n\nmax_input_vars = 5000\n", FILE_APPEND);
+    }
+
+    // Checks if it is in CLI and attempts to update the Apache2 configurations.
+    if (strpos($phpIniFile, "/cli/") > 1) {
+        $phpIniFile = str_replace("cli", "apache2", $phpIniFile);
+
+        // Append the changes to the file
+        if (file_exists($phpIniFile)) {
+            file_put_contents($phpIniFile, "\n\nmax_input_vars = 5000\n", FILE_APPEND);
+        }
     }
 }
 
+/**
+ * Function apacheConfiguration
+ *
+ * @return bool|string
+ */
 function apacheConfiguration() {
     global $host, $path, $selectedDomain, $selectedEmail;
 
@@ -216,7 +236,6 @@ function apacheConfiguration() {
 
     return $local;
 }
-
 
 /**
  * Function createMySqlPassword
@@ -369,7 +388,7 @@ function echoColor($text, $color) {
             echo "\033[37m";
             break;
         default:
-            return "\033[0m"; // Reset color
+            echo "\033[0m"; // Reset color
     }
 
     echo "\n\n\n";
@@ -439,4 +458,19 @@ global \$CFG;
 require_once( __DIR__ . '/lib/setup.php' );";
 
     return $config;
+}
+
+function changueTheme() {
+    global $local;
+
+    // Theme
+    $command = "dialog --menu 'Would you like to install a modern theme with Dark Mode support?' 10 50 2 \
+                       YES YES \
+                       NO  NO  \
+                       3>&1 1>&2 2>&3";
+    if (shell_exec($command) == "YES") {
+        shell_exec("git clone --depth 1 https://github.com/EduardoKrausME/moodle-theme_boost_magnific {$local}/theme/boost_magnific");
+        system("php {$local}/admin/cli/upgrade.php");
+        system("php {$local}/admin/cli/cfg.php --name=theme --set=boost_magnific");
+    }
 }
