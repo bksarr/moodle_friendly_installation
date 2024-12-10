@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # curl -s https://raw.githubusercontent.com/EduardoKrausME/moodle_friendly_installation/refs/heads/master/install.sh | bash
-# apt  -y remove mysql* && apt -y remove php* && apt -y remove apache* && apt -y autoremove
+# dpkg --configure -a && apt -y -qq -o=Dpkg::Use-Pty=0 remove mysql* php* apache* && apt -y autoremove
 
 # Update the packages
-apt update -y
+apt update -y -qq -o=Dpkg::Use-Pty=0
 
 
 # Check if the script is being run as root
@@ -18,7 +18,7 @@ fi
 if ! command -v mysql &> /dev/null; then
     echo "MySql is not installed. Installing now..."
 
-    apt install -y mysql-server
+    apt install -y -qq -o=Dpkg::Use-Pty=0 mysql-server
 
     # Start Service
     systemctl start mysql.service
@@ -36,13 +36,19 @@ if ! command -v php &> /dev/null; then
     echo "PHP is not installed. Installing now..."
 
     # Install PHP
-    apt install -y php php-{cli,curl,gd,xml,mbstring,mysqli,intl,soap,xmlrpc,zip,bcmath} apache2 libapache2-mod-php
+    apt install -y php -qq -o=Dpkg::Use-Pty=0 php-{cli,curl,gd,xml,mbstring,mysqli,intl,soap,xmlrpc,zip,bcmath} apache2 libapache2-mod-php
 
     # To allow for HTTPS traffic, allow the "Apache Full" profile:
     ufw allow 'Apache Full'
 
     # Then delete the redundant “Apache” profile:
     ufw delete allow 'Apache'
+
+    rm -f /var/www/html/index.html
+    rm -f /etc/apache2/sites-enabled/000-default.conf
+    rm -f /etc/apache2/mods-enabled/autoindex*
+
+    echo -e "\n\n# Security Settings\nServerTokens Prod\nServerSignature Off\n" | tee -a /etc/apache2/apache2.conf
 
     # Confirm the installation
     if command -v php &> /dev/null; then
@@ -54,23 +60,21 @@ fi
 
 # Check if GIT is installed
 if ! command -v git &> /dev/null; then
-    apt install -y git
+    apt install -y -qq -o=Dpkg::Use-Pty=0 git
 fi
 
 # Check if DIALOG is installed
 if ! command -v dialog &> /dev/null; then
-    apt install -y dialog
+    apt install -y -qq -o=Dpkg::Use-Pty=0 dialog
 fi
 
 
 # Check if DIALOG is installed
 if ! command -v certbot &> /dev/null; then
-    apt install -y certbot python3-certbot-apache
+    apt install -y -qq -o=Dpkg::Use-Pty=0 certbot python3-certbot-apache
 fi
 
 
 curl https://raw.githubusercontent.com/EduardoKrausME/moodle_friendly_installation/refs/heads/master/install-info.php -o install-info.php
 php install-info.php
 rm -f install-info.php
-
-
