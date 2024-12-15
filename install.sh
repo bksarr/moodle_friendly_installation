@@ -3,15 +3,16 @@
 # curl -s https://raw.githubusercontent.com/EduardoKrausME/moodle_friendly_installation/refs/heads/master/install.sh | bash
 # dpkg --configure -a && apt -y -qq -o=Dpkg::Use-Pty=0 remove mysql* php* apache* && apt -y autoremove
 
-# Update the packages
-apt update -y -qq -o=Dpkg::Use-Pty=0
-
 
 # Check if the script is being run as root
 if [ "$EUID" -ne 0 ]; then
   echo "This script must be run as root. Please re-run using sudo or as the root user."
   exit 1
 fi
+
+
+# Update the packages
+apt update -y -qq -o=Dpkg::Use-Pty=0
 
 
 # Check if MySql is installed
