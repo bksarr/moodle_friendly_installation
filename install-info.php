@@ -862,7 +862,7 @@ function changueLang($selectedLang) {
                 "selectedDomain_subtitle" => "It must not end with a slash",
                 "urlerror_scheme" => "URL must start with HTTP or HTTPS",
                 "urlerror_host" => "Invalid URL",
-                "urlerror_path" => "URL cannot end with /",
+                "urlerror_path" => "URL cannot end with a slash",
                 "urlerror_again" => "URL is not valid. Press enter to try again!",
 
                 "selectedEmail_title" => "What email should be used for the Moodle registration?",
@@ -879,9 +879,9 @@ function changueLang($selectedLang) {
 
                 "apacheConfiguration_ok" => "The domain is already configured.",
                 "apacheConfiguration_root" => "The domain's root folder is: {local}",
-                "apacheConfiguration_instruction" => "Next, you will be asked whether you want to install Moodle in `/var/www/html` or in `/var/www/html/{host}`.\n\n" .
-                    "The option `/var/www/html/{host}` is recommended if you plan to host multiple Moodle sites on different domains. " .
-                    "On the other hand, the `/var/www/html/` option is ideal if you only want a single domain or a single Moodle installation on this server.",
+                "apacheConfiguration_instruction" => "Next, you will be asked whether you want to install Moodle in `var www html` or in `var www html {host}`.\n\n" .
+                    "The option `var www html {host}` is recommended if you plan to host multiple Moodle sites on different domains. " .
+                    "On the other hand, the `var www html ` option is ideal if you only want a single domain or a single Moodle installation on this server.",
                 "apacheConfiguration_continue" => "Press enter to continue!",
                 "apacheConfiguration_menu_title" => "How do you want the installation?",
                 "apacheConfiguration_aborted" => "The folder {local} already exists, and the installation has been aborted.",
