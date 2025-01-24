@@ -859,7 +859,7 @@ function changueLang($selectedLang) {
         default:
             $strings = [
                 "selectedDomain_title" => "Please enter the URL of your Moodle now",
-                "selectedDomain_subtitle" => "It must not end with /"  "\nExample: http://yourmoodle.mysite.com\nExample: http://yourmoodle.mysite.com/moodle2",
+                "selectedDomain_subtitle" => "It must not end with a slash",
                 "urlerror_scheme" => "URL must start with HTTP or HTTPS",
                 "urlerror_host" => "Invalid URL",
                 "urlerror_path" => "URL cannot end with /",
